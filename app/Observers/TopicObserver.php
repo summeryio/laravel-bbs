@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Handlers\SlugTranslateHandler;
+use App\Http\Requests\Request;
 use App\Models\Topic;
 
 // creating, created, updating, updated, saving,
@@ -23,6 +24,9 @@ class TopicObserver
 
     public function updating(Topic $topic)
     {
-        //
+        // 标题更新， 相应更新slug
+        if ($topic->isDirty('title')) {
+            $topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);
+        }
     }
 }

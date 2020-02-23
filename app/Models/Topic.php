@@ -33,4 +33,10 @@ class Topic extends Model
     public function scopeRecentReplied($query) {
         return $query->orderBy('updated_at', 'desc');
     }
+
+    // slug 新的跳转链接方法link()
+    // 参数 $params 允许附加 URL 参数的设定。
+    public function link($params = []) {
+        return route('topics.show', array_merge([$this->id, $this->slug], $params));
+    }
 }
