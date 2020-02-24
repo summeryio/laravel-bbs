@@ -13,6 +13,6 @@ class Reply extends Model
 
     // 一条回复属于一个作者
     public function user() {
-        return $this->belongsTo(Topic::class);
+        return $this->belongsTo(User::class);
     }
 }
