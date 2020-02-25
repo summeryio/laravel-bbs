@@ -44,4 +44,10 @@ class Topic extends Model
     public function replies() {
         return $this->hasMany(Reply::class);
     }
+
+    // 更新帖子的回复数量
+    public function updateReplyCount() {
+        $this->reply_count = $this->replies->count();
+        $this->save();
+    }
 }

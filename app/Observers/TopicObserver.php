@@ -34,4 +34,9 @@ class TopicObserver
             dispatch(new TranslateSlug($topic));
         }
     }
+
+    // 监听话题删除成功的事件，在此事件发生时，删除此话题下所有的回复
+    public function deleted(Topic $topic) {
+        \DB::table('replies')->where('topic_id', $topic->id)->delete();
+    }
 }
