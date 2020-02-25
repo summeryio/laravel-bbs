@@ -32,9 +32,10 @@ class TopReplied extends Notification
     public function via($notifiable)
     {
         // 开启通知的频道
-        return ['database'];
+        return ['database', 'mail'];
     }
 
+    // 通过数据库
     public function toDatabase($notifiable) {
         $topic = $this->reply->topic;
         $link = $topic->link(['#reply' . $this->reply->id]);
@@ -50,5 +51,14 @@ class TopReplied extends Notification
             'topic_id' => $topic->id,
             'topic_title' => $topic->title,
         ];
+    }
+
+    // 通过邮件
+    public function toMail($notifiable) {
+        $url = $this->reply->topic->link(['#reply' . $this->reply->id]);
+
+        return (new MailMessage)
+            ->line('你的话题有新回复！')
+            ->action('查看回复', $url);
     }
 }
