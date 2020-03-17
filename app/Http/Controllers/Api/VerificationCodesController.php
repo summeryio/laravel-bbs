@@ -29,9 +29,9 @@ class VerificationCodesController extends Controller
         }*/
 
         // 判断线上环境，发送短信验证码
-//        if (!app()->environment('production')) {
-//            $code = '1234';
-//        } else {
+        if (!app()->environment('production')) {
+            $code = '1234';
+        } else {
             $sms = app('easysms');
             $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
             try {
@@ -40,9 +40,9 @@ class VerificationCodesController extends Controller
                 ]);
             } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
                 $message = $exception->getException('qcloud')->getMessage();
-                dd($message);
+                return $this->response->errorInternal($message ?: '短信发送异常');
             }
-//        }
+        }
 
 
         $key = 'verificationCode_'.Str::random(15);
