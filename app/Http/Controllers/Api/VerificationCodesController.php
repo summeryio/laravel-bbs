@@ -13,27 +13,12 @@ class VerificationCodesController extends Controller
     {
         $phone = $request->phone;
 
-        // 生成4位随机数，左侧补0
-        /*$code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
-
-        try {
-            $result = $easySms->send($phone, [
-                'template' => config('easysms.gateways.aliyun.templates.register'),
-                'data' => [
-                    'code' => $code
-                ],
-            ]);
-        } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
-            $message = $exception->getException('qcloud')->getMessage();
-            abort(500, $message ?: '短信发送异常');
-        }*/
-
         // 判断线上环境，发送短信验证码
         if (!app()->environment('production')) {
             $code = '1234';
         } else {
             $sms = app('easysms');
-            $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
+            $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT); // 生成4位随机数，左侧补0
             try {
                 $sms->send($phone, [
                     'content'  => "【叶兹利的前端技术记录】验证码为：{$code}，您正在登录，若非本人操作，请勿泄露。",
