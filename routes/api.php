@@ -49,10 +49,12 @@ Route::prefix('v1')->namespace('Api')
     Route::middleware('throttle:' . config('api.rate_limits.access'))
         ->group(function () {
             // 游客可以访问的接口
-
             // 某个用户的详情
             Route::get('users/{user}', 'UsersController@show')
                 ->name('users.show');
+            Route::get('categories', 'CategoriesController@index')
+                ->name('categories.index');
+
 
             // 登录后可以访问的接口
             Route::middleware('auth:api')->group(function() {
