@@ -70,7 +70,7 @@ Route::prefix('v1')->namespace('Api')
                 // 编辑登录用户信息
                 Route::patch('user', 'UsersController@update')->name('user.update');
 
-                // 发布话题
+                // 话题相关
                 Route::resource('topics', 'TopicsController')->only(['store', 'update', 'destroy']);
             });
         });
