@@ -54,6 +54,8 @@ Route::prefix('v1')->namespace('Api')
                 ->name('users.show');
             Route::get('categories', 'CategoriesController@index')
                 ->name('categories.index');
+            // 话题列表，详情
+            Route::resource('topics', 'TopicsController')->only(['index', 'show']);
 
 
             // 登录后可以访问的接口
@@ -67,6 +69,9 @@ Route::prefix('v1')->namespace('Api')
 
                 // 编辑登录用户信息
                 Route::patch('user', 'UsersController@update')->name('user.update');
+
+                // 发布话题
+                Route::resource('topics', 'TopicsController')->only(['store', 'update', 'destroy']);
             });
         });
 });
