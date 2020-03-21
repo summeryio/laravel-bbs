@@ -10,6 +10,6 @@ class ReplyQuery extends QueryBuilder {
     {
         parent::__construct(Reply::query());
 
-        $this->allowedIncludes('user', 'topic');
+        $this->allowedIncludes('user', 'topic', 'topic.user');
     }
 }
