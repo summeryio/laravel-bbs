@@ -87,6 +87,10 @@ Route::prefix('v1')->namespace('Api')
                     ->name('topics.replies.store');
                 Route::delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
                     ->name('topics.replies.destroy');
+
+                // 通知列表
+                Route::get('notifications', 'NotificationsController@index')
+                    ->name('notifications.index');
             });
         });
 });
